@@ -32,29 +32,28 @@
   <body>
     <div>
       <img src="qr_code.png" rel="nofollow" alt="qr code" />
+      <button id="writeButton">Write URL to NFC Tag</button>
     </div>
 
     <script>
       // Check if Web NFC is supported
-      if ("NDEFReader" in window) {
-        const reader = new NDEFReader();
+      if ("NDEFWriter" in window) {
+        const writeButton = document.getElementById("writeButton");
 
-        reader
-          .scan()
-          .then(() => {
-            console.log("Scan started successfully.");
-          })
-          .catch((error) => {
-            console.error("Error starting scan:", error);
-          });
-
-        reader.addEventListener("reading", (event) => {
-          const message = event.message;
-          if (message.records.length > 0) {
-            // Assuming the first record contains a URL
-            const url = new TextDecoder().decode(message.records[0].data);
-            // Redirect to the URL
-            window.location.href = url;
+        writeButton.addEventListener("click", async () => {
+          try {
+            // Create a new NDEFWriter instance
+            const writer = new NDEFWriter();
+            // Write a URL to the NFC tag
+            await writer.write(
+              "url",
+              new Uint8Array(
+                [..."https://example.com"].map((c) => c.charCodeAt(0))
+              )
+            );
+            console.log("URL written to NFC tag successfully.");
+          } catch (error) {
+            console.error("Error writing URL to NFC tag:", error);
           }
         });
       } else {
