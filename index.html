@@ -1,1 +1,36 @@
-Testing update
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centered Div with Full Width Image</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* prevent scrolling */
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  div {
+    text-align: center;
+  }
+
+  img {
+    width: 60vw; /* 100% of viewport width */
+    height: auto; /* Maintain aspect ratio */
+  }
+</style>
+</head>
+<body>
+  <div>
+    <img src="https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fapple-pufferfish-dbyp.squarespace.com%2Fjoin&chs=180x180&choe=UTF-8&chld=L|2" rel="nofollow" alt="qr code">
+  </div>
+</body>
+</html>
