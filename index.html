@@ -1,36 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Centered Div with Full Width Image</title>
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden; /* prevent scrolling */
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Centered Div with Full Width Image</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden; /* prevent scrolling */
+      }
 
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-  div {
-    text-align: center;
-  }
+      div {
+        text-align: center;
+      }
 
-  img {
-    width: 60vw; /* 100% of viewport width */
-    height: auto; /* Maintain aspect ratio */
-  }
-</style>
-</head>
-<body>
-  <div>
-    <img src="https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fapple-pufferfish-dbyp.squarespace.com%2Fjoin&chs=180x180&choe=UTF-8&chld=L|2" rel="nofollow" alt="qr code">
-  </div>
-</body>
+      img {
+        width: 80vw; /* 100% of viewport width */
+        height: auto; /* Maintain aspect ratio */
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <img src="qr_code.png" rel="nofollow" alt="qr code" />
+    </div>
+
+    <script>
+      // Check if Web NFC is supported
+      if ("NDEFReader" in window) {
+        const reader = new NDEFReader();
+
+        reader
+          .scan()
+          .then(() => {
+            console.log("Scan started successfully.");
+          })
+          .catch((error) => {
+            console.error("Error starting scan:", error);
+          });
+
+        reader.addEventListener("reading", (event) => {
+          const message = event.message;
+          if (message.records.length > 0) {
+            // Assuming the first record contains a URL
+            const url = new TextDecoder().decode(message.records[0].data);
+            // Redirect to the URL
+            window.location.href = url;
+          }
+        });
+      } else {
+        console.error("Web NFC not supported on this device/browser.");
+      }
+    </script>
+  </body>
 </html>
